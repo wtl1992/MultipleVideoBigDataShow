@@ -6,7 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfe29c61-929e-490c-b410-10ce8be82913" name="Default Changelist" comment="" />
+    <list default="true" id="cfe29c61-929e-490c-b410-10ce8be82913" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/biz/controller/facetoface/UploadHeadImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/biz/controller/facetoface/UploadHeadImageController.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,6 +66,7 @@
           <entry key="dummy" value="7" />
           <entry key="html" value="44" />
           <entry key="java" value="4624" />
+          <entry key="txt" value="10" />
           <entry key="xml" value="8" />
         </counts>
       </usages-collector>
@@ -70,7 +74,7 @@
         <counts>
           <entry key="HTML" value="44" />
           <entry key="JAVA" value="4624" />
-          <entry key="PLAIN_TEXT" value="7" />
+          <entry key="PLAIN_TEXT" value="17" />
           <entry key="XML" value="8" />
         </counts>
       </usages-collector>
@@ -117,8 +121,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/facetoface/UploadHeadImageController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+            <state relative-caret-position="145">
+              <caret line="5" column="13" lean-forward="true" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -190,6 +194,9 @@
     <findStrings>
       <find>F</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -267,7 +274,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555046076305" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555058136492" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -406,18 +413,35 @@
       <workItem from="1555049279501" duration="603000" />
       <workItem from="1555056285712" duration="1308000" />
       <workItem from="1555057797850" duration="75000" />
-      <workItem from="1555057877670" duration="180000" />
+      <workItem from="1555057877670" duration="227000" />
     </task>
+    <task id="LOCAL-00001" summary="20190412提交">
+      <created>1555058083584</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1555058083584</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66091000" />
+    <option name="totallyTimeSpent" value="66138000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31876332" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31876332" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -426,7 +450,7 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4946695" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -440,7 +464,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="bottom" id="Application Servers" order="13" weight="0.32936078" />
       <window_info anchor="bottom" id="Messages" order="14" sideWeight="0.48827294" weight="0.32936078" />
-      <window_info anchor="bottom" x="0" y="0" width="434" height="856" id="Documentation" order="15" sideWeight="0.5053305" side_tool="true" weight="0.3997833" />
+      <window_info anchor="bottom" x="0" y="0" width="434" height="856" id="Documentation" order="15" sideWeight="0.5053305" side_tool="true" visible="true" weight="0.3991323" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -457,6 +481,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="20190412提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="20190412提交" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config.xml">
@@ -649,8 +677,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/facetoface/UploadHeadImageController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+        <state relative-caret-position="145">
+          <caret line="5" column="13" lean-forward="true" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>

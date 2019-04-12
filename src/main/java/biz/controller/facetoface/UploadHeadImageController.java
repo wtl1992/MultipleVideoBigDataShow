@@ -2,8 +2,6 @@ package biz.controller.facetoface;
 
 import biz.mappers.HeadImageMapper;
 import biz.service.facetoface.GetHeadImageRecService;
-import model.HeadImage;
-import model.Idcard;
 import net.sf.json.JSONObject;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -13,10 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 import utils.HttpRequestPostUtil;
-import utils.UUID;
 
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

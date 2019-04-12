@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="biz.mappers.MovieAndStarsMapper">
+  <resultMap id="BaseResultMap" type="model.MovieAndStars">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="href" jdbcType="VARCHAR" property="href" />
+    <result column="imgSrc" jdbcType="VARCHAR" property="imgsrc" />
+    <result column="jiNumber" jdbcType="VARCHAR" property="jinumber" />
+    <association property="movieStars" select="biz.mappers.MovieStarMapper.selectBySecondUUID"
+                 column="uuid"/>
+  </resultMap>
+
+
+  <select id="selectMoviesByLikeTitle" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from movie where title like concat(concat('%',#{param1}),'%')
+  </select>
+
+  <select id="selectMoviesByUUID" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from movie where uuid = #{param1}
+  </select>
+
+</mapper>

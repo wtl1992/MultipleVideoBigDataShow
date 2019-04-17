@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--html代码-->
+    <!--使用video标签调用摄像头-->
+    <video id="video" autoplay></video>
+    <button id="photo">拍照</button>
+    <!--创建一个cavas  用来存放图片-->
+    <canvas id="canvas" style="display:none" width="200" height="200"></canvas>
+
+</body>
+<script>
+    var video = document.getElementById('video');
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+
+    //访问用户媒体设备的兼容方法
+    function getUserMedia(constraints, success, error) {
+        if (navigator.mediaDevices.getUserMedia) {
+            //最新的标准API
+            navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+        } else if (navigator.webkitGetUserMedia) {
+            //webkit核心浏览器
+            navigator.webkitGetUserMedia(constraints, success, error)
+        } else if (navigator.mozGetUserMedia) {
+            //firfox浏览器
+            navigator.mozGetUserMedia(constraints, success, error);
+        } else if (navigator.getUserMedia) {
+            //旧版API
+            navigator.getUserMedia(constraints, success, error);
+        }
+    }
+
+    function success(stream) {
+        //兼容webkit核心浏览器
+        // var CompatibleURL = window.URL || window.webkitURL;
+        //video.src = CompatibleURL.createObjectURL(stream);
+        //将视频流设置为video元素的源
+        video.srcObject = stream;
+        console.log(stream)
+        video.play();
+    }
+
+    function error(error) {
+        console.log('访问用户媒体设备失败');
+        console.dir(error)
+    }
+
+    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+        getUserMedia({ video: { width: 200, height: 200 } }, success, error);
+    } else {
+        alert('不支持访问用户媒体');
+    }
+    //图片上传到服务器
+    photo.onclick = function () {
+        uploadImage();
+    }
+    //获取Canvas的编码。
+    function uploadImage() {
+       
+        // context.drawImage(video, 0, 0, 300, 300);
+        var canvas = document.getElementById("canvas");
+        /*
+        通过< canvas>元素,创建画布对象
+        使用getContext(type)函数,创建画布对象
+        */
+
+        console.log(canvas.style.display)
+        canvas.style.display = 'block'
+        
+        var context = canvas.getContext("2d");
+        
+        
+        // 利用画布对象,进行绘制图形
+        context.drawImage(video, 0, 0, 200, 200);
+        console.log(canvas)
+        // 压缩
+        var quality = 0.4
+        var base = canvas.toDataURL('image/jpeg',quality );
+        console.log(base)
+        console.log(typeof(base))
+        var index = base.indexOf(',')
+        console.log(index+1)
+        var imgData =  base.substr(index+1)
+        console.log(imgData)
+        
+        // var imgData = canvas.toDataURL();
+        // console.log(imgData)
+        //上传到后台。
+        // var uploadAjax = $.ajax({
+        //     type: "post",
+        //     //后端需要调用的地址
+        //     url: "test",
+        //     data: JSON.stringify({ "imgData": imgData }),
+        //     contentType: "json/application",
+        //     //设置超时
+        //     timeout: 10000,
+        //     async: true,
+        //     success: function (htmlVal) {
+        //         //成功后回调
+        //     },
+        //     error: function (data) {
+        //     },
+        //     //调用执行后调用的函数
+        //     complete: function (XMLHttpRequest, textStatus) {
+        //         if (textStatus == 'timeout') {
+        //             uploadAjax.abort(); //取消请求
+        //             //超时提示：请求超时，请重试
+        //             alert("请求超时，请重试")
+        //             //请求超时返回首页
+        //             closeCard();
+        //         }
+        //     }
+        //});
+    }
+
+
+</script>
+
+</html>

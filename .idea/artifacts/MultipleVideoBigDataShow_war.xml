@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="MultipleVideoBigDataShow:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="MultipleVideoBigDataShow.war">
-      <element id="artifact" artifact-name="MultipleVideoBigDataShow:war exploded" />
-    </root>
-  </artifact>
-</component>

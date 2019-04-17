@@ -2,12 +2,14 @@ package utils;
 
 import net.sf.json.JSONObject;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class HttpRequestPostUtil {
@@ -77,7 +79,7 @@ public class HttpRequestPostUtil {
         return content.toString();
     }
 
-    public static String requestHttpByJSONObject(String url, String encoding, JSONObject params,String cookie){
+    public static String requestHttpByJSONObject(String url, String encoding, JSONObject params, String cookie){
         byte [] buffer = new byte[1024];
         int length = -1;
         StringBuffer content = new StringBuffer();
@@ -134,86 +136,132 @@ public class HttpRequestPostUtil {
         return content.toString();
     }
 
+    /**
+     *
+     * @param url 上传的地址
+     * @param params 所传入的参数设置
+     * @param fileMap 多文件上传的文件列表
+     * @param fileDatas 多文件上传的所对应的二进制数组
+     * @return
+     */
+    public static String upload(String url,Map<String, String> params, Map<String, String> fileMap, List<byte[]> fileDatas)
+    {
+        String ret = formUpload(url,params, fileMap,fileDatas);
 
-    public static String upload(String remoteUrl,
-                                byte [] bytes,
-                                String fileName,
-                                String encoding,
-                                JSONObject params){
-        byte [] buffer = new byte[1024];
-        int length = -1;
-        StringBuffer content = new StringBuffer();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        BufferedInputStream is = null;
+        System.out.println(ret);
+
+        return ret;
+    }
+
+    /**
+     * 上传图片
+     *
+     * @param urlStr
+     * @param params
+     * @param fileMap
+     * @return
+     */
+    public static String formUpload(String urlStr,Map<String, String> params,
+                                    Map<String, String> fileMap,
+                                    List<byte[]> fileDatas) {
+        String res = "";
+        HttpURLConnection conn = null;
+        String BOUNDARY = "---------------------------"+UUID.getUUID(); //boundary就是request头和上传文件内容的分隔符
         try {
-            HttpURLConnection urlConnection = (HttpURLConnection) new URL(remoteUrl).openConnection();
+            URL url = new URL(urlStr);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(30000);
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            conn
+                    .setRequestProperty("User-Agent",
+                            "Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.6)");
+            conn.setRequestProperty("Content-Type",
+                    "multipart/form-data; boundary=" + BOUNDARY);
 
-            //设置参数
-            urlConnection.setDoOutput(true);     //需要输出
-            urlConnection.setDoInput(true);      //需要输入
-            urlConnection.setUseCaches(false);   //不允许缓存
-            urlConnection.setRequestMethod("POST");      //设置POST方式连接
-
-            //设置请求属性
-            //设置数据的边界
-            String boundary = "------" + System.currentTimeMillis();
-            urlConnection.setRequestProperty("Content-Type","multipart/form-data;boundary="+boundary);
-            urlConnection.setRequestProperty("Connection", "Keep-Alive");// 维持长连接
-            urlConnection.setRequestProperty("Charset", encoding);
-
-            DataOutputStream dos=new DataOutputStream(urlConnection.getOutputStream());
-
+            OutputStream out = new DataOutputStream(conn.getOutputStream());
             //建立输入流，向指向的URL传入参数
-            if (params.keySet().size() != 0){
+            if (params != null && params.keySet().size() != 0){
                 StringBuffer param = new StringBuffer();
-                param.append(params.toString());
+                for (String par : params.keySet()){
+                    param.append(par +"="+ URLEncoder.encode(params.get(par),"utf-8") +"&");
+                }
+                DataOutputStream dos=new DataOutputStream(conn.getOutputStream());
 
                 dos.writeBytes(param.toString().substring(0,param.toString().length()-1));
+                dos.flush();
+                dos.close();
             }
-            //准备头信息
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("--");
-            stringBuilder.append(boundary);
-            stringBuilder.append("\r\n");
-            stringBuilder.append("Content-Disposition:form-data;name=\"media\";filename=\""+fileName+"\"\r\n");
-            stringBuilder.append("Content-Type:application/octet-stream\r\n\r\n");
-            //写入头信息
-            dos.write(stringBuilder.toString().getBytes());
 
-            //开始往remoteUrl写入文件
-            dos.write(bytes);
+            // file
+            if (fileMap != null) {
+                Iterator iter = fileMap.entrySet().iterator();
+                int index = 0;
+                while (iter.hasNext()) {
+                    Map.Entry entry = (Map.Entry) iter.next();
+                    String inputName = (String) entry.getKey();
+                    String inputValue = (String) entry.getValue();
+                    if (inputValue == null) {
+                        continue;
+                    }
+                    File file = new File(inputValue);
+                    String filename = file.getName();
+                    String contentType = new MimetypesFileTypeMap()
+                            .getContentType(file);
+                    if (filename.endsWith(".png")) {
+                        contentType = "image/png";
+                    }
+                    if (contentType == null || contentType.equals("")) {
+                        contentType = "application/octet-stream";
+                    }
 
-            //写入尾部信息
-            String footer = "\r\n--" + boundary + "--\r\n";
-            dos.write(footer.getBytes());
-            dos.flush();
-            dos.close();
+                    StringBuffer strBuf = new StringBuffer();
+                    strBuf.append("\r\n").append("--").append(BOUNDARY).append(
+                            "\r\n");
+                    strBuf.append("Content-Disposition: form-data; name=\""
+                            + inputName + "\"; filename=\"" + filename
+                            + "\"\r\n");
+                    strBuf.append("Content-Type:" + contentType + "\r\n\r\n");
 
-            is = new BufferedInputStream(urlConnection.getInputStream());
-            do{
-                length = is.read(buffer);
-                if (length !=-1){
-                    //content.append(new String(buffer,0,length,encoding));
-                    outputStream.write(buffer,0,length);
+                    out.write(strBuf.toString().getBytes());
+
+                    out.write(fileDatas.get(index),0,fileDatas.get(index).length);
+                    index ++;
                 }
-            }while(length!=-1);
-            content.append(new String(outputStream.toByteArray(),0,outputStream.toByteArray().length,encoding));
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
+            }
+
+            byte[] endData = ("\r\n--" + BOUNDARY + "--\r\n").getBytes();
+            out.write(endData);
+            out.flush();
+            out.close();
+
+            // 读取返回数据
+            StringBuffer strBuf = new StringBuffer();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    conn.getInputStream()));
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                strBuf.append(line).append("\n");
+            }
+            res = strBuf.toString();
+            reader.close();
+            reader = null;
+        } catch (Exception e) {
+            System.out.println("发送POST请求出错。" + urlStr);
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally{
-            if (is != null){
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+                conn = null;
             }
         }
-        return content.toString();
+        return res;
     }
+
 
 
     public static byte [] exchangeMusicsUrl(String url){

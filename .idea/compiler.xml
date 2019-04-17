@@ -9,8 +9,5 @@
         <module name="MultipleVideoBigDataShow" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="MultipleVideoBigDataShow" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>

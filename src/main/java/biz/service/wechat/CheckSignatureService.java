@@ -88,358 +88,253 @@ public class CheckSignatureService {
 
         switch (inMsgEntity.getMsgType()){
             case "text":
-                String content = inMsgEntity.getContent();
-
-                if ("电视剧".equalsIgnoreCase(content)){
-                    OutMsgEntity outMsgEntity = new OutMsgEntity();
-                    outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity.setArticleCount(8);
-                    outMsgEntity.setCreateTime(new Date().getTime());
-                    outMsgEntity.setMsgType("news");
-                    ArticleItem[] articles = new ArticleItem[8];
-
-                    ArticleItem article_top = new ArticleItem();
-                    article_top.setTitle("祥龙检索电视剧，千度电视剧");
-                    article_top.setDescription("能够提供很好的电视剧检索平台");
-                    article_top.setPicUrl("http://ljxwtl.cn/images/logo/index_logo.png");
-                    article_top.setUrl("http://ljxwtl.cn/m/tvResult?pageIndex=1");
-                    articles[0] = article_top;
-
-                    String json = HttpRequestUtil.requestHttp("http://www.ljxwtl.cn/tvPlayResult?pageIndex=1","utf-8","GET");
-                    for (int i=1;i<8;i++){
-                        JSONObject jsonObject = JSONObject.fromObject(json).getJSONArray("tvList").getJSONObject(i);
-                        ArticleItem article = new ArticleItem();
-                        article.setTitle(jsonObject.getString("title"));
-                        article.setDescription("好看的电视剧");
-                        article.setPicUrl("http:"+jsonObject.getString("imgSrc"));
-                        article.setUrl(jsonObject.getString("href"));
-                        articles[i] = article;
-                    }
-                    outMsgEntity.setItem(articles);
-
-                    return outMsgEntity;
-                }
-                else if ("电影".equalsIgnoreCase(content)){
-                    OutMsgEntity outMsgEntity = new OutMsgEntity();
-                    outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity.setArticleCount(8);
-                    outMsgEntity.setCreateTime(new Date().getTime());
-                    outMsgEntity.setMsgType("news");
-                    ArticleItem [] articles = new ArticleItem[8];
-                    /**
-                     * 添加第一个图文头
-                     */
-                    ArticleItem article_top = new ArticleItem("祥龙检索电影，千度电影",
-                            "能够提供很好的电影检索平台",
-                            "http://ljxwtl.cn/images/logo/index_logo.png",
-                            "http://ljxwtl.cn/m/movieResult?pageIndex=1");
-                    articles[0] = article_top;
-                    String json = HttpRequestUtil.requestHttp("http://www.ljxwtl.cn/moviePlayResult?pageIndex=1","utf-8","GET");
-
-                    for (int i=1;i<8;i++){
-                        JSONObject jsonObject = JSONObject.fromObject(json).getJSONArray("movieList").getJSONObject(i);
-                        ArticleItem article = new ArticleItem(jsonObject.getString("title"),
-                                "好看的电影",
-                                "http:"+jsonObject.getString("imgSrc"),
-                                jsonObject.getString("href"));
-                        articles[i] = article;
-                    }
-                    outMsgEntity.setItem(articles);
-                    return outMsgEntity;
-                }
-                else if ("app".equalsIgnoreCase(content)){
-                    OutMsgEntity outMsgEntity = new OutMsgEntity();
-                    outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity.setArticleCount(8);
-                    outMsgEntity.setCreateTime(new Date().getTime());
-                    outMsgEntity.setMsgType("news");
-                    ArticleItem[] articles = new ArticleItem[8];
-                    /**
-                     * 添加第一个图文头
-                     */
-                    ArticleItem article_top = new ArticleItem("祥龙检索app，千度app",
-                            "能够提供很好的app检索平台",
-                            "http://ljxwtl.cn/images/logo/index_logo.png",
-                            "http://ljxwtl.cn/m/appResult?categoryId=-10&pageSize=60&pageContext=1");
-                    articles[0] = article_top;
-                    String json = HttpRequestUtil.requestHttp("http://www.ljxwtl.cn/getClassifyApps?categoryId=-10&pageSize=60&pageContext=1","utf-8","GET");
-
-                    for (int i=1;i<8;i++){
-                        JSONObject jsonObject = JSONObject.fromObject(json).getJSONArray("apps").getJSONObject(i);
-                        ArticleItem article = new ArticleItem(jsonObject.getString("appName"),
-                                "好用的app",
-                                jsonObject.getString("iconUrl"),
-                                jsonObject.getString("apkUrl"));
-                        articles[i] = article;
-                    }
-                    outMsgEntity.setItem(articles);
-                    return outMsgEntity;
-                }
-                else if ("图片".equalsIgnoreCase(content)){
-                    OutMsgEntity outMsgEntity = new OutMsgEntity();
-                    outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity.setArticleCount(8);
-                    outMsgEntity.setCreateTime(new Date().getTime());
-                    outMsgEntity.setMsgType("news");
-                    ArticleItem[] articles = new ArticleItem[8];
-                    /**
-                     * 添加第一个图文头
-                     */
-                    ArticleItem article_top = new ArticleItem("祥龙检索图片，千度图片",
-                            "能够提供很好的图片检索平台",
-                            "http://ljxwtl.cn/images/logo/index_logo.png",
-                            "http://ljxwtl.cn/m/imageResult?keyword=%E7%BE%8E%E5%A5%B3&pageIndex=1&pageSize=60");
-                    articles[0] = article_top;
-                    String json = HttpRequestUtil.requestHttp("http://www.ljxwtl.cn/getAllMatchingImages?keyword=美女&pageIndex=1&pageSize=60","utf-8","GET");
-
-                    for (int i=1;i<8;i++){
-                        JSONObject jsonObject = JSONArray.fromObject(json).getJSONObject(i);
-                        ArticleItem article = new ArticleItem(jsonObject.getString("fromPageTitleEnc"),
-                                "好看的图片",
-                                jsonObject.getString("middleURL"),
-                                jsonObject.getString("middleURL"));
-                        articles[i] = article;
-                    }
-                    outMsgEntity.setItem(articles);
-                    return outMsgEntity;
-                }
-                else if ("音乐".equalsIgnoreCase(content)){
-                    OutMsgEntity outMsgEntity = new OutMsgEntity();
-                    outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity.setArticleCount(8);
-                    outMsgEntity.setCreateTime(new Date().getTime());
-                    outMsgEntity.setMsgType("news");
-                    ArticleItem []articles = new ArticleItem[8];
-                    /**
-                     * 添加第一个图文头
-                     */
-                    ArticleItem article_top = new ArticleItem("祥龙检索音乐，千度音乐",
-                            "能够提供很好的音乐检索平台",
-                            "http://ljxwtl.cn/images/logo/index_logo.png",
-                            "http://ljxwtl.cn/m/musicResult?keyword=%E9%9F%B3%E4%B9%90&pageIndex=1&pageSize=20");
-                    articles[0] = article_top;
-                    String json = HttpRequestUtil.requestHttp("http://www.ljxwtl.cn/getAllMatchingMusics?keyword=音乐&pageIndex=1&pageSize=20","utf-8","GET");
-
-                    for (int i=1;i<8;i++){
-                        JSONObject jsonObject = JSONArray.fromObject(json).getJSONObject(i);
-                        ArticleItem article = new ArticleItem(jsonObject.getString("name"),
-                                "好用的音乐",
-                                "http:"+jsonObject.getString("pic"),
-                                jsonObject.getString("url"));
-                        articles[i] = article;
-                    }
-                    outMsgEntity.setItem(articles);
-                    return outMsgEntity;
-                }
-                else if ("迅雷下载".equalsIgnoreCase(content)){
-                    OutMsgEntity outMsgEntity = new OutMsgEntity();
-                    outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity.setArticleCount(8);
-                    outMsgEntity.setCreateTime(new Date().getTime());
-                    outMsgEntity.setMsgType("news");
-                    ArticleItem[] articles = new ArticleItem[8];
-                    /**
-                     * 添加第一个图文头
-                     */
-                    ArticleItem article_top = new ArticleItem("祥龙检索迅雷下载，千度迅雷下载",
-                            "能够提供很好的迅雷下载检索平台",
-                            "http://ljxwtl.cn/images/logo/index_logo.png",
-                            "http://ljxwtl.cn/m/getThunderPagingResult?classify=%E6%9C%80%E6%96%B0%E5%BD%B1%E7%89%87&pageIndex=1");
-                    articles[0] = article_top;
-                    String json = HttpRequestUtil.requestHttp("http://www.ljxwtl.cn/getPagingNewMovies?pageIndex=1","gb2312","GET");
-
-                    for (int i=1;i<8;i++){
-                        JSONObject jsonObject = JSONArray.fromObject(json).getJSONObject(i);
-                        ArticleItem article = new ArticleItem(jsonObject.getString("title"),
-                                "好用的迅雷下载",
-                                "https://www.xunlei.com/v2018/dist/header/xl-logo2x.png?h=35e6a0",
-                                jsonObject.getString("downloadPageUrl"));
-                        articles[i] = article;
-                    }
-                    outMsgEntity.setItem(articles);
-                    return outMsgEntity;
-                }
-                else if ("百度云盘".equalsIgnoreCase(content)){
-                    OutMsgEntity outMsgEntity = new OutMsgEntity();
-                    outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity.setArticleCount(8);
-                    outMsgEntity.setCreateTime(new Date().getTime());
-                    outMsgEntity.setMsgType("news");
-                    ArticleItem[] articles = new ArticleItem[8];
-                    /**
-                     * 添加第一个图文头
-                     */
-                    ArticleItem article_top = new ArticleItem("祥龙检索百度云盘，千度百度云盘",
-                            "能够提供很好的百度云盘检索平台",
-                            "http://ljxwtl.cn/images/logo/index_logo.png",
-                            "http://ljxwtl.cn/m/baiduyunwangpanSearchResult?keyword=%E6%95%B0%E6%8D%AE%E5%BA%93&pageIndex=1");
-                    articles[0] = article_top;
-                    String json = HttpRequestUtil.requestHttp("http://www.ljxwtl.cn/getSearchPagingBaiduYunSources?keyword=数据库&pageIndex=1","utf-8","GET");
-
-                    System.out.println(json);
-                    for (int i=1;i<8;i++){
-                        JSONObject jsonObject = JSONArray.fromObject(json).getJSONObject(i);
-                        ArticleItem article = new ArticleItem(jsonObject.getString("title"),
-                                "好用的百度云盘",
-                                "https://pan.baidu.com/box-static/disk-header/header/img/logo.png?t=1550732425176",
-                                jsonObject.getString("link"));
-                        articles[i] = article;
-                    }
-                    outMsgEntity.setItem(articles);
-                    return outMsgEntity;
-                }
-                else if (content.length() > 20){
-                    OutMsgEntity outMsgEntity_voice = new OutMsgEntity();
-                    outMsgEntity_voice.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity_voice.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity_voice.setCreateTime(new Date().getTime());
-                    outMsgEntity_voice.setMsgType("voice");
-                    outMsgEntity_voice.setMedia_id_voice(new String []{
-                            JSONObject.fromObject(uploadResource("https://fanyi.baidu.com/gettts?lan=zh&text="+ URLEncoder.encode(inMsgEntity.getContent(),"utf-8") +"&spd=5&source=web","voice")).getString("media_id")
-                    });
-                    return outMsgEntity_voice;
-                }
-                String params = "{\n" +
-                        "\t\"reqType\":0,\n" +
-                        "    \"perception\": {\n" +
-                        "        \"inputText\": {\n" +
-                        "            \"text\": \""+inMsgEntity.getContent()+"\"\n" +
-                        "        }\n" +
-                        "    },\n" +
-                        "    \"userInfo\": {\n" +
-                        "        \"apiKey\": \"90e06f2fdde149c4b0fceef0ad255af7\",\n" +
-                        "        \"userId\": \"1234567890\"\n" +
-                        "    }\n" +
-                        "}";
-
-                String url = "http://openapi.tuling123.com/openapi/api/v2";
-
-                String json = HttpRequestPostUtil.requestHttpByJSONObject(url,"utf-8",JSONObject.fromObject(params),null);
-
-                String result = JSONObject.fromObject(json).getJSONArray("results").
-                        getJSONObject(0).
-                        getJSONObject("values").getString("text");
-
-
-                if (result != null){
-                    OutMsgEntity outMsgEntity = new OutMsgEntity();
-                    outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                    outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                    outMsgEntity.setCreateTime(new Date().getTime());
-                    outMsgEntity.setMsgType("text");
-                    outMsgEntity.setContent(result);
-                    return outMsgEntity;
-                }
-                break;
-            case "image":
-                OutMsgEntity outMsgEntity = new OutMsgEntity();
-                outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
-                outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
-                outMsgEntity.setCreateTime(new Date().getTime());
-                outMsgEntity.setMsgType("image");
-                outMsgEntity.setMediaId(new String []{
-                        JSONObject.fromObject(uploadResource(inMsgEntity.getPicUrl(),"image")).getString("media_id")
-                });
-                return outMsgEntity;
+                return dealTextMessage(inMsgEntity);
+            case "event":
+                return dealSubscribeEvent(inMsgEntity);
         }
         return null;
     }
 
     /**
-     * 将文本变成语音资源
-     * @param text mediaId
+     * 处理关注公众号后返回的消息
      * @return
      */
-    private String fanyiTextToYuyin(String text){
-        String url = null;
-        try {
-            url = "https://fanyi.baidu.com/gettts?lan=zh&text="+ URLEncoder.encode(text,"utf-8") +"&spd=5&source=web";
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+    private Object dealSubscribeEvent(InMsgEntity inMsgEntity){
+        String fromUserName = inMsgEntity.getToUserName();
+        String toUserName = inMsgEntity.getFromUserName();
+
+        OutMsgEntity outMsgEntity = new OutMsgEntity();
+        outMsgEntity.setFromUserName(fromUserName);
+        outMsgEntity.setToUserName(toUserName);
+        outMsgEntity.setCreateTime(new Date().getTime());
+        outMsgEntity.setMsgType("news");
+        outMsgEntity.setArticleCount(8);
+
+        ArticleItem [] articleItems = new ArticleItem[8];
+
+        String titles [] = new String[]{"千度一下","电视剧","电影","app","图片","音乐","迅雷下载","百度云盘"};
+        String urls []= new String [] {
+                "http://ljxwtl.cn/index",
+                "http://ljxwtl.cn/m/tvResult?pageIndex=1",
+                "http://ljxwtl.cn/m/movieResult?pageIndex=1",
+                "http://ljxwtl.cn/m/appResult?categoryId=-10&pageSize=60&pageContext=1",
+                "http://ljxwtl.cn/m/imageResult?keyword=%E7%BE%8E%E5%A5%B3&pageIndex=1&pageSize=60",
+                "http://ljxwtl.cn/m/musicResult?keyword=%E9%9F%B3%E4%B9%90&pageIndex=1&pageSize=20",
+                "http://ljxwtl.cn/m/getThunderPagingResult?classify=%E6%9C%80%E6%96%B0%E5%BD%B1%E7%89%87&pageIndex=1",
+                "http://ljxwtl.cn/m/baiduyunwangpanSearchResult?keyword=%E6%95%B0%E6%8D%AE%E5%BA%93&pageIndex=1"
+        };
+        String descriptions [] = new String []{
+                "千度一下","电视剧","电影","app","图片","音乐","迅雷下载","百度云盘"
+        };
+
+        String picUrls [] = new String[]{
+                "https://ljxwtl.cn/images/logo/index_logo.png",
+                "https://ljxwtl.cn/images/logo/index_logo.png",
+                "https://ljxwtl.cn/images/logo/index_logo.png",
+                "https://ljxwtl.cn/images/logo/index_logo.png",
+                "https://ljxwtl.cn/images/logo/index_logo.png",
+                "https://ljxwtl.cn/images/logo/index_logo.png",
+                "https://ljxwtl.cn/images/logo/index_logo.png",
+                "https://ljxwtl.cn/images/logo/index_logo.png"
+        };
+
+        for (int i =0;i<articleItems.length;i++){
+            ArticleItem articleItem = new ArticleItem();
+            articleItem.setTitle(titles[i]);
+            articleItem.setDescription(descriptions[i]);
+            articleItem.setUrl(urls[i]);
+            articleItem.setPicUrl(picUrls[i]);
+
+            articleItems[i] = articleItem;
         }
-        byte [] buffer = new byte[1024];
-        int length = -1;
-        StringBuffer content = new StringBuffer();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        BufferedInputStream is = null;
-        try {
-            HttpURLConnection urlConnection = (HttpURLConnection) new URL(url).openConnection();
 
-            urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.3");
-            is = new BufferedInputStream(urlConnection.getInputStream());
-            do{
-                length = is.read(buffer);
-                if (length !=-1){
-                    //content.append(new String(buffer,0,length,encoding));
-                    outputStream.write(buffer,0,length);
-                }
-            }while(length!=-1);
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally{
-            if (is != null){
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        outMsgEntity.setItem(articleItems);
 
-
-        //上传语音资源到微信公众号
-        String weixinUploadurl = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
-        weixinUploadurl = weixinUploadurl.replaceAll("ACCESS_TOKEN", SysContext.ACCESS_TOKEN).replaceAll("TYPE","voice");
-
-        String result = HttpRequestPostUtil.upload(weixinUploadurl,
-                outputStream.toByteArray(),
-                UUID.getUUID()+".mp3",
-                "utf-8",
-                new JSONObject());
-        return result;
+        return outMsgEntity;
     }
 
     /**
-     * 上传图片
-     * 返回一个json数据，包含media_id
+     * 处理text类型消息
+     * @param inMsgEntity
      * @return
      */
-    public String uploadResource(String url,String type){
-        String weixinUploadurl = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
-        weixinUploadurl = weixinUploadurl.replaceAll("ACCESS_TOKEN", SysContext.ACCESS_TOKEN).replaceAll("TYPE",type);
-        String fileName = null;
-        switch (type){
-            case "image":
-                fileName = UUID.getUUID() + ".png";
-                break;
-            case "voice":
-                fileName = UUID.getUUID() + ".mp3";
-                break;
-            case "video":
-                fileName = UUID.getUUID() + ".mp4";
-                break;
-        }
-        return HttpRequestPostUtil.upload(weixinUploadurl,HttpRequestPostUtil.exchangeMusicsUrl(url),fileName,"utf-8",new JSONObject());
-    }
+    private Object dealTextMessage(InMsgEntity inMsgEntity){
+        String content = inMsgEntity.getContent();
 
-    /**
-     * 获得上传给微信服务器的资源，根据media_id
-     * @param media_id
-     * @return
-     */
-    public String getUploadResource(String media_id){
-        String weixiDownloadResourceUrl = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
-        weixiDownloadResourceUrl = weixiDownloadResourceUrl.replaceAll("ACCESS_TOKEN",SysContext.ACCESS_TOKEN).replaceAll("MEDIA_ID",media_id);
-        return HttpRequestUtil.requestHttp(weixiDownloadResourceUrl,"utf-8","GET");
+        switch (content){
+            case "电视剧":
+                OutMsgEntity outMsgEntity = new OutMsgEntity();
+                outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
+                outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
+                outMsgEntity.setCreateTime(new Date().getTime());
+                outMsgEntity.setMsgType("news");
+                outMsgEntity.setArticleCount(1);
+                ArticleItem[] articleItems = new ArticleItem[1];
+                ArticleItem articleItem = new ArticleItem();
+
+                articleItem.setTitle("电视剧");
+                articleItem.setDescription("利用电视剧服务进行搜索数据！！！");
+                articleItem.setUrl("http://ljxwtl.cn/m/tvResult?pageIndex=1");
+                articleItem.setPicUrl("https://ljxwtl.cn/images/logo/index_logo.png");
+                articleItems[0] = articleItem;
+
+                outMsgEntity.setItem(articleItems);
+
+                return outMsgEntity;
+
+            case "电影":
+                OutMsgEntity outMsgEntity_movie = new OutMsgEntity();
+                outMsgEntity_movie.setFromUserName(inMsgEntity.getToUserName());
+                outMsgEntity_movie.setToUserName(inMsgEntity.getFromUserName());
+                outMsgEntity_movie.setCreateTime(new Date().getTime());
+                outMsgEntity_movie.setMsgType("news");
+                outMsgEntity_movie.setArticleCount(1);
+                ArticleItem[] articleItems_movie = new ArticleItem[1];
+                ArticleItem articleItem_movie = new ArticleItem();
+
+                articleItem_movie.setTitle("电影");
+                articleItem_movie.setDescription("利用电影服务进行搜索数据！！！");
+                articleItem_movie.setUrl("http://ljxwtl.cn/m/movieResult?pageIndex=1");
+                articleItem_movie.setPicUrl("https://ljxwtl.cn/images/logo/index_logo.png");
+                articleItems_movie[0] = articleItem_movie;
+
+                outMsgEntity_movie.setItem(articleItems_movie);
+
+                return outMsgEntity_movie;
+
+            case "app":
+                OutMsgEntity outMsgEntity_app = new OutMsgEntity();
+                outMsgEntity_app.setFromUserName(inMsgEntity.getToUserName());
+                outMsgEntity_app.setToUserName(inMsgEntity.getFromUserName());
+                outMsgEntity_app.setCreateTime(new Date().getTime());
+                outMsgEntity_app.setMsgType("news");
+                outMsgEntity_app.setArticleCount(1);
+                ArticleItem[] articleItems_app = new ArticleItem[1];
+                ArticleItem articleItem_app = new ArticleItem();
+
+                articleItem_app.setTitle("app");
+                articleItem_app.setDescription("利用app服务进行搜索数据！！！");
+                articleItem_app.setUrl("http://ljxwtl.cn/m/appResult?categoryId=-10&pageSize=60&pageContext=1");
+                articleItem_app.setPicUrl("https://ljxwtl.cn/images/logo/index_logo.png");
+                articleItems_app[0] = articleItem_app;
+
+                outMsgEntity_app.setItem(articleItems_app);
+
+                return outMsgEntity_app;
+
+            case "图片":
+                OutMsgEntity outMsgEntity_image = new OutMsgEntity();
+                outMsgEntity_image.setFromUserName(inMsgEntity.getToUserName());
+                outMsgEntity_image.setToUserName(inMsgEntity.getFromUserName());
+                outMsgEntity_image.setCreateTime(new Date().getTime());
+                outMsgEntity_image.setMsgType("news");
+                outMsgEntity_image.setArticleCount(1);
+                ArticleItem[] articleItems_image = new ArticleItem[1];
+                ArticleItem articleItem_image = new ArticleItem();
+
+                articleItem_image.setTitle("图片");
+                articleItem_image.setDescription("利用图片服务进行搜索数据！！！");
+                articleItem_image.setUrl("http://ljxwtl.cn/m/imageResult?keyword=%E7%BE%8E%E5%A5%B3&pageIndex=1&pageSize=60");
+                articleItem_image.setPicUrl("https://ljxwtl.cn/images/logo/index_logo.png");
+                articleItems_image[0] = articleItem_image;
+
+                outMsgEntity_image.setItem(articleItems_image);
+
+                return outMsgEntity_image;
+
+            case "音乐":
+                OutMsgEntity outMsgEntity_music = new OutMsgEntity();
+                outMsgEntity_music.setFromUserName(inMsgEntity.getToUserName());
+                outMsgEntity_music.setToUserName(inMsgEntity.getFromUserName());
+                outMsgEntity_music.setCreateTime(new Date().getTime());
+                outMsgEntity_music.setMsgType("news");
+                outMsgEntity_music.setArticleCount(1);
+                ArticleItem[] articleItems_music = new ArticleItem[1];
+                ArticleItem articleItem_music = new ArticleItem();
+
+                articleItem_music.setTitle("电视剧");
+                articleItem_music.setDescription("利用电视剧服务进行搜索数据！！！");
+                articleItem_music.setUrl("http://ljxwtl.cn/m/tvResult?pageIndex=1");
+                articleItem_music.setPicUrl("https://ljxwtl.cn/images/logo/index_logo.png");
+                articleItems_music[0] = articleItem_music;
+
+                outMsgEntity_music.setItem(articleItems_music);
+
+                return outMsgEntity_music;
+
+            case "迅雷下载":
+                OutMsgEntity outMsgEntity_thunder = new OutMsgEntity();
+                outMsgEntity_thunder.setFromUserName(inMsgEntity.getToUserName());
+                outMsgEntity_thunder.setToUserName(inMsgEntity.getFromUserName());
+                outMsgEntity_thunder.setCreateTime(new Date().getTime());
+                outMsgEntity_thunder.setMsgType("news");
+                outMsgEntity_thunder.setArticleCount(1);
+                ArticleItem[] articleItems_thunder = new ArticleItem[1];
+                ArticleItem articleItem_thunder = new ArticleItem();
+
+                articleItem_thunder.setTitle("迅雷下载");
+                articleItem_thunder.setDescription("利用迅雷下载服务进行搜索数据！！！");
+                articleItem_thunder.setUrl("http://ljxwtl.cn/m/getThunderPagingResult?classify=%E6%9C%80%E6%96%B0%E5%BD%B1%E7%89%87&pageIndex=1");
+                articleItem_thunder.setPicUrl("https://ljxwtl.cn/images/logo/index_logo.png");
+                articleItems_thunder[0] = articleItem_thunder;
+
+                outMsgEntity_thunder.setItem(articleItems_thunder);
+
+                return outMsgEntity_thunder;
+
+            case "百度云盘":
+                OutMsgEntity outMsgEntity_baidu = new OutMsgEntity();
+                outMsgEntity_baidu.setFromUserName(inMsgEntity.getToUserName());
+                outMsgEntity_baidu.setToUserName(inMsgEntity.getFromUserName());
+                outMsgEntity_baidu.setCreateTime(new Date().getTime());
+                outMsgEntity_baidu.setMsgType("news");
+                outMsgEntity_baidu.setArticleCount(1);
+                ArticleItem[] articleItems_baidu = new ArticleItem[1];
+                ArticleItem articleItem_baidu = new ArticleItem();
+
+                articleItem_baidu.setTitle("电视剧");
+                articleItem_baidu.setDescription("利用电视剧服务进行搜索数据！！！");
+                articleItem_baidu.setUrl("http://ljxwtl.cn/m/baiduyunwangpanSearchResult?keyword=%E6%95%B0%E6%8D%AE%E5%BA%93&pageIndex=1");
+                articleItem_baidu.setPicUrl("https://ljxwtl.cn/images/logo/index_logo.png");
+                articleItems_baidu[0] = articleItem_baidu;
+
+                outMsgEntity_baidu.setItem(articleItems_baidu);
+
+                return outMsgEntity_baidu;
+        }
+
+        String params = "{\n" +
+                "\t\"reqType\":0,\n" +
+                "    \"perception\": {\n" +
+                "        \"inputText\": {\n" +
+                "            \"text\": \""+inMsgEntity.getContent()+"\"\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"userInfo\": {\n" +
+                "        \"apiKey\": \"90e06f2fdde149c4b0fceef0ad255af7\",\n" +
+                "        \"userId\": \"1234567890\"\n" +
+                "    }\n" +
+                "}";
+
+        String url = "http://openapi.tuling123.com/openapi/api/v2";
+
+        String json = HttpRequestPostUtil.requestHttpByJSONObject(url,"utf-8",JSONObject.fromObject(params),null);
+
+        String result = JSONObject.fromObject(json).getJSONArray("results").
+                getJSONObject(0).
+                getJSONObject("values").getString("text");
+
+
+        if (result != null){
+            OutMsgEntity outMsgEntity = new OutMsgEntity();
+            outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
+            outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
+            outMsgEntity.setCreateTime(new Date().getTime());
+            outMsgEntity.setMsgType("text");
+            outMsgEntity.setContent(result);
+            return outMsgEntity;
+        }
+
+        return null;
     }
 }

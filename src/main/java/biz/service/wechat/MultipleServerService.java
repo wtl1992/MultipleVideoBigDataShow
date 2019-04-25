@@ -17,8 +17,8 @@ import java.util.List;
 @Lazy
 @Scope("singleton")
 public class MultipleServerService {
-    private static String AppID = "wx3670540bf9bd6c3b";
-    private static String AppSecret = "c90e6d70c0439e260093839dde488132";
+    private static String AppID = "wxaf214c119cfbd5fb";
+    private static String AppSecret = "dac2d75c25e3b2915a5581f9497e0c30";
 
     static {
         new Thread(new Runnable() {
@@ -26,6 +26,7 @@ public class MultipleServerService {
             public void run() {
                 while(true){
                     String json = getAccessToken();
+                    System.out.println(json);
                     SysContext.ACCESS_TOKEN = JSONObject.fromObject(json).getString("access_token");
                     try {
                         Thread.sleep((long) (1.8 * 60 * 60 * 1000));

@@ -43,7 +43,7 @@ public class AiQiYiMovieSearchService implements MovieSearchServiceInterface {
             params.put("secondFilter","");
             params.put("termParams","%26ctgname%3D%25E7%2594%25B5%25E5%25BD%25B1%26data_type%3D34%253Bmustnot%26data_type%3D1%26graph_type%3D1_1_0_-1%26real_query%3D%25E7%2594%25B5%25E5%25BD%25B1%25E5%25A4%25A7%25E5%2585%25A8");
             params.put("pos","1");
-            json = HttpRequestPostUtil.requestHttp("https://so.iqiyi.com/intent?if=video&type=list","UTF-8",params,null);
+            json = HttpRequestPostUtil.requestHttp("https://so.iqiyi.com/intent?if=video&type=list","UTF-8","application/x-www-form-urlencoded",params,null,null);
 
             json = (String) JSONObject.fromObject(json).get("data");
 

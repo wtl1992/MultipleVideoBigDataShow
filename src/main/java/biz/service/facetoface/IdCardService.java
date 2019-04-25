@@ -25,7 +25,7 @@ public class IdCardService {
         params.put("id_card_side",id_card_side);
         params.put("image",image);
 
-        String result = HttpRequestPostUtil.requestHttp(url, "utf-8", params, null);
+        String result = HttpRequestPostUtil.requestHttp(url, "utf-8", "application/x-www-form-urlencoded",params, null,null);
 
 
         JSONObject jsonObject = JSONObject.fromObject(result);

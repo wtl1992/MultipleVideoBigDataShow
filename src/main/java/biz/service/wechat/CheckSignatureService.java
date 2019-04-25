@@ -11,14 +11,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import utils.HttpRequestPostUtil;
 import utils.HttpRequestUtil;
 import utils.UUID;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,6 +26,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Lazy
@@ -38,9 +39,9 @@ public class CheckSignatureService {
     public boolean checkToken(String signature,
                               String timestamp,
                               String nonce,
-                              String echostr){
+                              String echostr) {
         String token = "ljxwtl";
-        String strs [] = {token,timestamp,nonce};
+        String strs[] = {token, timestamp, nonce};
 
         //对字符串数组进行字典排序
         Arrays.sort(strs);
@@ -48,7 +49,7 @@ public class CheckSignatureService {
 
         //拼接排序后的字符串数组
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i=0;i<strs.length;i++){
+        for (int i = 0; i < strs.length; i++) {
             stringBuilder.append(strs[i]);
         }
 
@@ -62,17 +63,17 @@ public class CheckSignatureService {
         byte[] digestBytes = messageDigest.digest(stringBuilder.toString().getBytes());
 
         //将字节数组进行转换成十六进制转换
-        char digist[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+        char digist[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         String result = "";
-        for (int i=0;i<digestBytes.length;i++){
-            char tmpChars [] = new char[2];
-            tmpChars[0] = digist[(digestBytes[i]>>> 4) & 0X0F];
+        for (int i = 0; i < digestBytes.length; i++) {
+            char tmpChars[] = new char[2];
+            tmpChars[0] = digist[(digestBytes[i] >>> 4) & 0X0F];
             tmpChars[1] = digist[digestBytes[i] & 0X0F];
             result += new String(tmpChars);
         }
         logger.info("#########################################");
-        logger.info("传递的signature："+signature);
-        logger.info("加密后的signature："+result);
+        logger.info("传递的signature：" + signature);
+        logger.info("加密后的signature：" + result);
         logger.info("#########################################");
 
         return result != null ? result.equals(signature.toUpperCase()) : false;
@@ -80,26 +81,30 @@ public class CheckSignatureService {
 
     /**
      * 处理发送过来的post消息
+     *
      * @param inMsgEntity
      * @return
      * @throws IOException
      */
-    public Object dealMultipleMessage(InMsgEntity inMsgEntity) throws IOException {
+    public Object dealMultipleMessage(InMsgEntity inMsgEntity) throws Exception {
 
-        switch (inMsgEntity.getMsgType()){
+        switch (inMsgEntity.getMsgType()) {
             case "text":
                 return dealTextMessage(inMsgEntity);
             case "event":
                 return dealSubscribeEvent(inMsgEntity);
+            case "image":
+                return dealImageMsg(inMsgEntity);
         }
         return null;
     }
 
     /**
      * 处理关注公众号后返回的消息
+     *
      * @return
      */
-    private Object dealSubscribeEvent(InMsgEntity inMsgEntity){
+    private Object dealSubscribeEvent(InMsgEntity inMsgEntity) {
         String fromUserName = inMsgEntity.getToUserName();
         String toUserName = inMsgEntity.getFromUserName();
 
@@ -110,10 +115,10 @@ public class CheckSignatureService {
         outMsgEntity.setMsgType("news");
         outMsgEntity.setArticleCount(8);
 
-        ArticleItem [] articleItems = new ArticleItem[8];
+        ArticleItem[] articleItems = new ArticleItem[8];
 
-        String titles [] = new String[]{"千度一下","电视剧","电影","app","图片","音乐","迅雷下载","百度云盘"};
-        String urls []= new String [] {
+        String titles[] = new String[]{"千度一下", "电视剧", "电影", "app", "图片", "音乐", "迅雷下载", "百度云盘"};
+        String urls[] = new String[]{
                 "http://ljxwtl.cn/index",
                 "http://ljxwtl.cn/m/tvResult?pageIndex=1",
                 "http://ljxwtl.cn/m/movieResult?pageIndex=1",
@@ -123,11 +128,11 @@ public class CheckSignatureService {
                 "http://ljxwtl.cn/m/getThunderPagingResult?classify=%E6%9C%80%E6%96%B0%E5%BD%B1%E7%89%87&pageIndex=1",
                 "http://ljxwtl.cn/m/baiduyunwangpanSearchResult?keyword=%E6%95%B0%E6%8D%AE%E5%BA%93&pageIndex=1"
         };
-        String descriptions [] = new String []{
-                "千度一下","电视剧","电影","app","图片","音乐","迅雷下载","百度云盘"
+        String descriptions[] = new String[]{
+                "千度一下", "电视剧", "电影", "app", "图片", "音乐", "迅雷下载", "百度云盘"
         };
 
-        String picUrls [] = new String[]{
+        String picUrls[] = new String[]{
                 "https://ljxwtl.cn/images/logo/index_logo.png",
                 "https://ljxwtl.cn/images/logo/index_logo.png",
                 "https://ljxwtl.cn/images/logo/index_logo.png",
@@ -138,7 +143,7 @@ public class CheckSignatureService {
                 "https://ljxwtl.cn/images/logo/index_logo.png"
         };
 
-        for (int i =0;i<articleItems.length;i++){
+        for (int i = 0; i < articleItems.length; i++) {
             ArticleItem articleItem = new ArticleItem();
             articleItem.setTitle(titles[i]);
             articleItem.setDescription(descriptions[i]);
@@ -155,13 +160,14 @@ public class CheckSignatureService {
 
     /**
      * 处理text类型消息
+     *
      * @param inMsgEntity
      * @return
      */
-    private Object dealTextMessage(InMsgEntity inMsgEntity){
+    private Object dealTextMessage(InMsgEntity inMsgEntity) throws Exception {
         String content = inMsgEntity.getContent();
 
-        switch (content){
+        switch (content) {
             case "电视剧":
                 OutMsgEntity outMsgEntity = new OutMsgEntity();
                 outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
@@ -307,7 +313,7 @@ public class CheckSignatureService {
                 "\t\"reqType\":0,\n" +
                 "    \"perception\": {\n" +
                 "        \"inputText\": {\n" +
-                "            \"text\": \""+inMsgEntity.getContent()+"\"\n" +
+                "            \"text\": \"" + inMsgEntity.getContent() + "\"\n" +
                 "        }\n" +
                 "    },\n" +
                 "    \"userInfo\": {\n" +
@@ -318,23 +324,66 @@ public class CheckSignatureService {
 
         String url = "http://openapi.tuling123.com/openapi/api/v2";
 
-        String json = HttpRequestPostUtil.requestHttpByJSONObject(url,"utf-8",JSONObject.fromObject(params),null);
+        String json = HttpRequestPostUtil.requestHttpByJSONObject(url, "utf-8", JSONObject.fromObject(params), null);
 
         String result = JSONObject.fromObject(json).getJSONArray("results").
                 getJSONObject(0).
                 getJSONObject("values").getString("text");
 
 
-        if (result != null){
+        if (result != null) {
             OutMsgEntity outMsgEntity = new OutMsgEntity();
             outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
             outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
             outMsgEntity.setCreateTime(new Date().getTime());
+
             outMsgEntity.setMsgType("text");
             outMsgEntity.setContent(result);
             return outMsgEntity;
+
         }
 
         return null;
+    }
+
+    /**
+     * 处理image消息
+     *
+     * @return
+     */
+    public Object dealImageMsg(InMsgEntity inMsgEntity) throws Exception {
+        String result = HttpRequestUtil.requestHttp("https://ljxwtl.cn/getAllMatchingImages?keyword=%E7%BE%8E%E5%A5%B3&pageIndex=1&pageSize=1", "utf-8", "GET");
+        JSONArray jsonArray = JSONArray.fromObject(result);
+        String middleURL = jsonArray.getJSONObject(0).getString("middleURL");
+
+        Map<String, byte[]> files = new HashMap<String, byte[]>();
+        byte[] requestHttpThroughBytes = HttpRequestUtil.requestHttpThroughBytes(middleURL, "utf-8", "GET");
+        files.put("media", requestHttpThroughBytes);
+
+//        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("D:/"+UUID.getUUID()+".png"));
+//
+//        bufferedOutputStream.write(requestHttpThroughBytes);
+//
+//        bufferedOutputStream.close();
+        InputStream inputStream = HttpRequestPostUtil.uploadMultipartFile("https://api.weixin.qq.com/cgi-bin/media/upload?access_token=" + SysContext.ACCESS_TOKEN + "&type=image", null, files, "media");
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length = -1;
+
+        while ((length = bufferedInputStream.read(buffer)) != -1) {
+            byteArrayOutputStream.write(buffer, 0, length);
+        }
+
+        String result_upload = new String(byteArrayOutputStream.toByteArray(), "utf-8");
+        JSONObject jsonObject = JSONObject.fromObject(result_upload);
+        OutMsgEntity outMsgEntity = new OutMsgEntity();
+        outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
+        outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
+        outMsgEntity.setCreateTime(new Date().getTime());
+        outMsgEntity.setMsgType("image");
+        outMsgEntity.setMediaId(new String[]{jsonObject.getString("media_id")});
+
+        return outMsgEntity;
     }
 }

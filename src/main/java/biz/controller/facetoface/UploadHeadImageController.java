@@ -66,7 +66,7 @@ public class UploadHeadImageController {
         params.put("group_id","1");
         params.put("image_type","BASE64");
 
-        String result = HttpRequestPostUtil.requestHttp(url, "utf-8", params, null);
+        String result = HttpRequestPostUtil.requestHttp(url, "utf-8", "application/x-www-form-urlencoded",params, null,null);
 
         JSONObject jsonObject = JSONObject.fromObject(result);
 

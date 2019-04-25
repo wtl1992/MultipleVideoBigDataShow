@@ -1,20 +1,27 @@
 package utils;
 
 import net.sf.json.JSONObject;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class HttpRequestPostUtil {
 
-    public static String requestHttp(String url, String encoding, Map<String,String> params,String cookie){
+    /**
+     *
+     * @param url 请求的post的url地址
+     * @param encoding 所使用的编码格式
+     * @param params 所传入的参数设置
+     * @param cookie
+     * @param jsonStr 所传入的字节数组
+     * @return
+     */
+    public static String requestHttp(String url, String encoding, String content_type, Map<String,String> params,String cookie,String jsonStr){
         byte [] buffer = new byte[1024];
         int length = -1;
         StringBuffer content = new StringBuffer();
@@ -30,7 +37,7 @@ public class HttpRequestPostUtil {
             urlConnection.setRequestMethod("POST");      //设置POST方式连接
 
             //设置请求属性
-            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            urlConnection.setRequestProperty("Content-Type", content_type);
             urlConnection.setRequestProperty("Connection", "Keep-Alive");// 维持长连接
             urlConnection.setRequestProperty("Charset", encoding);
             if (cookie != null){
@@ -41,7 +48,7 @@ public class HttpRequestPostUtil {
             urlConnection.connect();
 
             //建立输入流，向指向的URL传入参数
-            if (params.keySet().size() != 0){
+            if (params != null && params.keySet().size() != 0){
                 StringBuffer param = new StringBuffer();
                 for (String par : params.keySet()){
                     param.append(par +"="+ URLEncoder.encode(params.get(par),encoding) +"&");
@@ -49,6 +56,13 @@ public class HttpRequestPostUtil {
                 DataOutputStream dos=new DataOutputStream(urlConnection.getOutputStream());
 
                 dos.writeBytes(param.toString().substring(0,param.toString().length()-1));
+                dos.flush();
+                dos.close();
+            }
+            else if (jsonStr != null && jsonStr.length() > 0){
+                DataOutputStream dos=new DataOutputStream(urlConnection.getOutputStream());
+
+                dos.write(jsonStr.getBytes(encoding));
                 dos.flush();
                 dos.close();
             }
@@ -142,13 +156,14 @@ public class HttpRequestPostUtil {
      * @param params 所传入的参数设置
      * @param fileMap 多文件上传的文件列表
      * @param fileDatas 多文件上传的所对应的二进制数组
+     * @param cookie 所需要的cookie
      * @return
      */
-    public static String upload(String url,Map<String, String> params, Map<String, String> fileMap, List<byte[]> fileDatas)
+    public static String upload(String url,Map<String, String> params, Map<String, String> fileMap, List<byte[]> fileDatas,String cookie,String multipartFileName)
     {
-        String ret = formUpload(url,params, fileMap,fileDatas);
+        String ret = formUpload(url,params, fileMap,fileDatas,cookie,multipartFileName);
 
-        System.out.println(ret);
+//        System.out.println(ret);
 
         return ret;
     }
@@ -156,14 +171,18 @@ public class HttpRequestPostUtil {
     /**
      * 上传图片
      *
-     * @param urlStr
-     * @param params
-     * @param fileMap
+     * @param urlStr 请求文件上传的url地址
+     * @param params 所要传递的request header的参数
+     * @param fileMap 所要传的文件列表
+     * @param fileDatas 所要传的文件的字节数组列表
+     * @param cookie 所需要的cookie
+     * @param multipartFileName 上传多个文件的唯一名称标识，即MultipartFile[]的名称
      * @return
      */
     public static String formUpload(String urlStr,Map<String, String> params,
                                     Map<String, String> fileMap,
-                                    List<byte[]> fileDatas) {
+                                    List<byte[]> fileDatas,
+                                    String cookie,String multipartFileName) {
         String res = "";
         HttpURLConnection conn = null;
         String BOUNDARY = "---------------------------"+UUID.getUUID(); //boundary就是request头和上传文件内容的分隔符
@@ -182,6 +201,9 @@ public class HttpRequestPostUtil {
                             "Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.6)");
             conn.setRequestProperty("Content-Type",
                     "multipart/form-data; boundary=" + BOUNDARY);
+            if (cookie != null && cookie.length() > 0){
+                conn.setRequestProperty("Cookie",cookie);
+            }
 
             OutputStream out = new DataOutputStream(conn.getOutputStream());
             //建立输入流，向指向的URL传入参数
@@ -223,7 +245,7 @@ public class HttpRequestPostUtil {
                     strBuf.append("\r\n").append("--").append(BOUNDARY).append(
                             "\r\n");
                     strBuf.append("Content-Disposition: form-data; name=\""
-                            + inputName + "\"; filename=\"" + filename
+                            + multipartFileName + "\"; filename=\"" + filename
                             + "\"\r\n");
                     strBuf.append("Content-Type:" + contentType + "\r\n\r\n");
 
@@ -254,10 +276,9 @@ public class HttpRequestPostUtil {
             System.out.println("发送POST请求出错。" + urlStr);
             e.printStackTrace();
         } finally {
-            if (conn != null) {
-                conn.disconnect();
-                conn = null;
-            }
+//            if (conn != null) {
+//                conn = null;
+//            }
         }
         return res;
     }
@@ -307,5 +328,92 @@ public class HttpRequestPostUtil {
             }
         }
         return outputStream.toByteArray();
+    }
+
+
+    /**
+     * 上传多个文件
+     * @param urlStr http请求路径
+     * @param params 请求参数
+     * @param files 上传的文件map
+     * @return
+     */
+    public static InputStream uploadMultipartFile(String urlStr, Map<String, String> params,
+                                                  Map<String, byte[]> files, String multipartFileName) {
+       final String BOUNDARY = "-------45962402127348";
+       final String FILE_ENCTYPE = "multipart/form-data";
+        InputStream is = null;
+
+        try {
+            URL url = new URL(urlStr);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            con.setConnectTimeout(100000);
+            con.setDoInput(true);
+            con.setDoOutput(true);
+            con.setUseCaches(false);
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Connection", "Keep-Alive");
+            con.setRequestProperty("Charset", "UTF-8");
+            con.setRequestProperty("Content-Type", FILE_ENCTYPE + "; boundary="
+                    + BOUNDARY);
+
+            StringBuilder sb = null;
+            DataOutputStream dos = new DataOutputStream(con.getOutputStream());;
+            if (params != null) {
+                sb = new StringBuilder();
+                for (String s : params.keySet()) {
+                    sb.append("--");
+                    sb.append(BOUNDARY);
+                    sb.append("\r\n");
+                    sb.append("Content-Disposition: form-data; name=\"");
+                    sb.append(s);
+                    sb.append("\"\r\n\r\n");
+                    sb.append(params.get(s));
+                    sb.append("\r\n");
+                }
+
+                dos.write(sb.toString().getBytes());
+            }
+
+            if (files != null) {
+                for (String s : files.keySet()) {
+                    sb = new StringBuilder();
+                    sb.append("--");
+                    sb.append(BOUNDARY);
+                    sb.append("\r\n");
+                    sb.append("Content-Disposition: form-data; name=\"");
+                    sb.append(multipartFileName);
+                    sb.append("\"; filename=\"");
+                    sb.append(UUID.getUUID()+".jpg");
+                    sb.append("\"\r\n");
+                    sb.append("Content-Type: application/octet-stream");//这里注意！如果上传的不是图片，要在这里改文件格式，比如txt文件，这里应该是text/plain
+                    sb.append("\r\n\r\n");
+                    dos.write(sb.toString().getBytes());
+
+                    dos.write(files.get(s));
+                    dos.write("\r\n".getBytes());
+                }
+
+                sb = new StringBuilder();
+                sb.append("--");
+                sb.append(BOUNDARY);
+                sb.append("--\r\n");
+                dos.write(sb.toString().getBytes());
+            }
+            dos.flush();
+
+            if (con.getResponseCode() == 200)
+                is = con.getInputStream();
+
+            dos.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return is;
     }
 }

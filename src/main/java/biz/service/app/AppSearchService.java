@@ -27,7 +27,7 @@ public class AppSearchService {
             params.put("pns", pns);
             params.put("sid",sid);
 
-            String json = HttpRequestPostUtil.requestHttp(url,"utf-8",params,null);
+            String json = HttpRequestPostUtil.requestHttp(url,"utf-8","application/x-www-form-urlencoded",params,null,null);
             if (json != null && !"".equalsIgnoreCase(json)){
 //                System.out.println(json);
                 JSONArray jsonArray = (JSONArray) ((JSONObject)JSONObject.fromObject(json).get("obj")).get("appDetails");

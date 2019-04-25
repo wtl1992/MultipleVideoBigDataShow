@@ -53,4 +53,54 @@ public class HttpRequestUtil {
 		
 		return content.toString();
 	}
+
+
+	/**
+	 * 返回字节数组
+	 * @param url
+	 * @param encoding
+	 * @param method
+	 * @return
+	 */
+	public static byte [] requestHttpThroughBytes(String url,String encoding,String method){
+		byte [] buffer = new byte[1024];
+		int length = -1;
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		BufferedInputStream is = null;
+		try {
+			HttpURLConnection urlConnection = (HttpURLConnection) new URL(url).openConnection();
+
+			if ("GET".equalsIgnoreCase(method)){
+				urlConnection.setRequestMethod("GET");
+			}
+			else{
+				urlConnection.setRequestMethod("POST");
+				urlConnection.setRequestProperty("Content-Type", "application/json");
+			}
+			urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.3");
+			is = new BufferedInputStream(urlConnection.getInputStream());
+			do{
+				length = is.read(buffer);
+				if (length !=-1){
+					//content.append(new String(buffer,0,length,encoding));
+					outputStream.write(buffer,0,length);
+				}
+			}while(length!=-1);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			if (is != null){
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return outputStream.toByteArray();
+	}
 }

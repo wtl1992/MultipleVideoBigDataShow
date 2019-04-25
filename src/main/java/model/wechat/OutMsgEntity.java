@@ -18,6 +18,7 @@ public class OutMsgEntity {
     @XmlElement(name = "MediaId")
     private String [] media_id_voice;
 
+
     private Integer ArticleCount;
     @XmlElementWrapper(name = "Articles")
     private ArticleItem [] item;
@@ -94,4 +95,5 @@ public class OutMsgEntity {
     public void setMedia_id_voice(String[] media_id_voice) {
         this.media_id_voice = media_id_voice;
     }
+
 }

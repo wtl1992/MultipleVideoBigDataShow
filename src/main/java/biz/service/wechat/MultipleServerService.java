@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Lazy
-@Scope("singleton")
 public class MultipleServerService {
     private static String AppID = "wxaf214c119cfbd5fb";
     private static String AppSecret = "dac2d75c25e3b2915a5581f9497e0c30";

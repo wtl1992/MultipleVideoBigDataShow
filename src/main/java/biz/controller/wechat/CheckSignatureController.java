@@ -63,7 +63,7 @@ public class CheckSignatureController {
 
     @RequestMapping(value = "/wx",method = RequestMethod.POST)
     public @ResponseBody
-    Object dealMultipleMessage(@RequestBody InMsgEntity inMsgEntity) throws IOException {
+    Object dealMultipleMessage(@RequestBody InMsgEntity inMsgEntity) throws Exception {
         return checkSignatureService.dealMultipleMessage(inMsgEntity);
     }
 }

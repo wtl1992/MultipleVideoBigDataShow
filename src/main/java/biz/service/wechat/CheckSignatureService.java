@@ -330,16 +330,60 @@ public class CheckSignatureService {
                 getJSONObject(0).
                 getJSONObject("values").getString("text");
 
-
+        System.out.println(result);
         if (result != null) {
             OutMsgEntity outMsgEntity = new OutMsgEntity();
             outMsgEntity.setFromUserName(inMsgEntity.getToUserName());
             outMsgEntity.setToUserName(inMsgEntity.getFromUserName());
             outMsgEntity.setCreateTime(new Date().getTime());
 
-            outMsgEntity.setMsgType("text");
-            outMsgEntity.setContent(result);
-            return outMsgEntity;
+            System.out.println(result);
+            if (inMsgEntity.getContent().length() > 10){
+                String url_voice = "https://fanyi.baidu.com/gettts?lan=zh&text="+URLEncoder.encode(result,"utf-8")+"&spd=5&source=web";
+                byte[] httpThroughBytes = HttpRequestUtil.requestHttpThroughBytes(url_voice, "utf-8", "GET");
+
+//                BufferedInputStream bufferedInputStream_1 = new BufferedInputStream(new FileInputStream("D:/test.amr"));
+//                ByteArrayOutputStream byteArrayOutputStream_1 = new ByteArrayOutputStream();
+//
+//                byte buffer [] = new byte[1024];
+//                int length = -1;
+//
+//                while((length = bufferedInputStream_1.read(buffer))!=-1){
+//                    byteArrayOutputStream_1.write(buffer,0,length);
+//                }
+
+                Map<String, byte[]> files = new HashMap<String, byte[]>();
+                files.put("media", httpThroughBytes);
+
+//        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("D:/"+UUID.getUUID()+".png"));
+//
+//        bufferedOutputStream.write(requestHttpThroughBytes);
+//
+//        bufferedOutputStream.close();
+                InputStream inputStream = HttpRequestPostUtil.uploadMultipartFile("https://api.weixin.qq.com/cgi-bin/media/upload?access_token=" + SysContext.ACCESS_TOKEN + "&type=voice", null, files, "media","mp3");
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int length = -1;
+
+                while ((length = bufferedInputStream.read(buffer)) != -1) {
+                    byteArrayOutputStream.write(buffer, 0, length);
+                }
+
+                String result_upload = new String(byteArrayOutputStream.toByteArray(), "utf-8");
+                JSONObject jsonObject = JSONObject.fromObject(result_upload);
+
+                System.out.println(jsonObject);
+                outMsgEntity.setMsgType("voice");
+                outMsgEntity.setMedia_id_voice(new String[]{jsonObject.getString("media_id")});
+                return outMsgEntity;
+            }
+            else{
+                outMsgEntity.setMsgType("text");
+                outMsgEntity.setContent(result);
+
+                return outMsgEntity;
+            }
 
         }
 
@@ -365,7 +409,7 @@ public class CheckSignatureService {
 //        bufferedOutputStream.write(requestHttpThroughBytes);
 //
 //        bufferedOutputStream.close();
-        InputStream inputStream = HttpRequestPostUtil.uploadMultipartFile("https://api.weixin.qq.com/cgi-bin/media/upload?access_token=" + SysContext.ACCESS_TOKEN + "&type=image", null, files, "media");
+        InputStream inputStream = HttpRequestPostUtil.uploadMultipartFile("https://api.weixin.qq.com/cgi-bin/media/upload?access_token=" + SysContext.ACCESS_TOKEN + "&type=image", null, files, "media","jpg");
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];

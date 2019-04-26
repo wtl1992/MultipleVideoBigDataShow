@@ -339,7 +339,7 @@ public class HttpRequestPostUtil {
      * @return
      */
     public static InputStream uploadMultipartFile(String urlStr, Map<String, String> params,
-                                                  Map<String, byte[]> files, String multipartFileName) {
+                                                  Map<String, byte[]> files, String multipartFileName,String suffix) {
        final String BOUNDARY = "-------45962402127348";
        final String FILE_ENCTYPE = "multipart/form-data";
         InputStream is = null;
@@ -385,11 +385,13 @@ public class HttpRequestPostUtil {
                     sb.append("Content-Disposition: form-data; name=\"");
                     sb.append(multipartFileName);
                     sb.append("\"; filename=\"");
-                    sb.append(UUID.getUUID()+".jpg");
+                    sb.append(UUID.getUUID()+"."+suffix);
                     sb.append("\"\r\n");
                     sb.append("Content-Type: application/octet-stream");//这里注意！如果上传的不是图片，要在这里改文件格式，比如txt文件，这里应该是text/plain
                     sb.append("\r\n\r\n");
                     dos.write(sb.toString().getBytes());
+
+                    System.out.println(sb.toString());
 
                     dos.write(files.get(s));
                     dos.write("\r\n".getBytes());

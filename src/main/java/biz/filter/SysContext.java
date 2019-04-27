@@ -11,7 +11,13 @@ public class SysContext {
 	public static String PROJECT_ROOT;// 项目的根目录路径
 
 	public static String ACCESS_TOKEN;//全局access_token
-	
+
+	/**
+	 * 微信公众号的appId和AppSecret
+	 */
+	public static String AppID = "wx3670540bf9bd6c3b";
+	public static String AppSecret = "91607abedaecda24e943f1383500a37a";
+
 	static {
 		String nodepath = SysContext.class.getClassLoader().getResource("/").getPath();  
 		// 项目的根目录路径  

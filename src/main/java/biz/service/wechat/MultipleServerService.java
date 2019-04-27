@@ -15,8 +15,7 @@ import java.util.List;
 
 @Service
 public class MultipleServerService {
-    private static String AppID = "wxaf214c119cfbd5fb";
-    private static String AppSecret = "dac2d75c25e3b2915a5581f9497e0c30";
+
 
     static {
         new Thread(new Runnable() {
@@ -41,7 +40,7 @@ public class MultipleServerService {
      * @return
      */
     private static String getAccessToken(){
-        String access_tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+AppID+"&secret="+AppSecret;
+        String access_tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+SysContext.AppID+"&secret="+SysContext.AppSecret;
         String json = HttpRequestUtil.requestHttp(access_tokenUrl, "utf-8", "GET");
         return json;
     }

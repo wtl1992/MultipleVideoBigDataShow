@@ -21,6 +21,16 @@
     <filter-name>sessionFilter</filter-name>
     <url-pattern>*</url-pattern>
   </filter-mapping>
+
+    <filter>
+        <filter-name>RequestFilter</filter-name>
+        <filter-class>biz.filter.RequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequestFilter</filter-name>
+        <url-pattern>/WeiXinBackstage/main</url-pattern>
+    </filter-mapping>
+
   <!-- 请求编码设置为utf-8 -->
   <filter>  
         <filter-name>characterEncodingFilter</filter-name>  

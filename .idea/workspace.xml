@@ -7,33 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2867ad89-aa02-4ef6-a438-76d3ddae7380" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/biz/controller/WeiXinBackstage/WeiXinBackstageIndexController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/biz/filter/RequestFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/biz/mappers/LoginUserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/biz/service/GloableErrorHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/biz/service/WeiXinBackstage/WeiXinBackstageIndexService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mapper/LoginUserMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/LoginUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/LoginUserExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/WeiXinBackstage/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/WeiXinBackstage/main.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/WeiXinBackstage/uploadImage.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/error.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/WeiXinBackstage/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/WeiXinBackstage/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/WeiXinBackstage/uploadImage.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/WeiXinBackstage/image.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/WeiXinBackstage/login-bg.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/WeiXinBackstage/login-btn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/WeiXinBackstage/login-title.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/uploadImage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/biz/controller/WeiXinBackstage/WeiXinUploadImageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/biz/mappers/MediaMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/biz/service/WeiXinBackstage/WeiXinUploadImageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mapper/MediaMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Media.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/MediaExample.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biz/filter/SysContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/biz/filter/SysContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biz/service/wechat/MultipleServerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/biz/service/wechat/MultipleServerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql/bigdata.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/sql/bigdata.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/uploadImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/uploadImage.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -94,12 +75,12 @@
         <counts>
           <entry key="class" value="5" />
           <entry key="css" value="6" />
-          <entry key="java" value="65" />
+          <entry key="java" value="73" />
           <entry key="jpg" value="1" />
-          <entry key="js" value="3" />
+          <entry key="js" value="5" />
           <entry key="jsp" value="9" />
           <entry key="sql" value="1" />
-          <entry key="xml" value="5" />
+          <entry key="xml" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -107,30 +88,30 @@
           <entry key="CLASS" value="5" />
           <entry key="CSS" value="6" />
           <entry key="Image" value="1" />
-          <entry key="JAVA" value="65" />
+          <entry key="JAVA" value="73" />
           <entry key="JSP" value="9" />
-          <entry key="JavaScript" value="3" />
+          <entry key="JavaScript" value="5" />
           <entry key="SQL" value="1" />
-          <entry key="XML" value="5" />
+          <entry key="XML" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="1423" />
-          <entry key="java" value="4774" />
-          <entry key="js" value="404" />
+          <entry key="java" value="5295" />
+          <entry key="js" value="439" />
           <entry key="jsp" value="667" />
-          <entry key="txt" value="54" />
+          <entry key="txt" value="82" />
           <entry key="xml" value="54" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="1423" />
-          <entry key="JAVA" value="4774" />
+          <entry key="JAVA" value="5295" />
           <entry key="JSP" value="667" />
-          <entry key="JavaScript" value="404" />
-          <entry key="PLAIN_TEXT" value="54" />
+          <entry key="JavaScript" value="439" />
+          <entry key="PLAIN_TEXT" value="82" />
           <entry key="XML" value="54" />
         </counts>
       </usages-collector>
@@ -156,11 +137,53 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/uploadImage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="11" column="41" lean-forward="true" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+            <state relative-caret-position="269">
+              <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/biz/service/WeiXinBackstage/WeiXinUploadImageService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#2160#2176#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/WeiXinBackstage/WeiXinUploadImageController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="16" column="33" lean-forward="true" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/wechat/CheckSignatureController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="66" column="43" lean-forward="true" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/biz/service/wechat/CheckSignatureService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="422" column="69" lean-forward="true" selection-start-line="402" selection-start-column="8" selection-end-line="422" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -170,9 +193,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -215,7 +238,9 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/WeiXinBackstage/main.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/WeiXinBackstage/uploadImage.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/WeiXinBackstage/uploadImage.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/biz/controller/WeiXinBackstage/WeiXinUploadImageController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/uploadImage.js" />
+        <option value="$PROJECT_DIR$/src/main/java/biz/service/WeiXinBackstage/WeiXinUploadImageService.java" />
       </list>
     </option>
   </component>
@@ -341,6 +366,16 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="biz" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MultipleVideoBigDataShow" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MultipleVideoBigDataShow" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="biz" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="wechat" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MultipleVideoBigDataShow" type="b2602c69:ProjectViewProjectNode" />
@@ -538,7 +573,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556338940261" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556340958649" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../OneFaceV1.0" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
@@ -550,11 +585,11 @@
       <recent name="utils" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\IdeaProjects\MultipleVideoBigDataShow\src\main\webapp\images\WeiXinBackstage" />
-      <recent name="D:\IdeaProjects\MultipleVideoBigDataShow\src\main\webapp\WEB-INF\pages\WeiXinBackstage" />
       <recent name="D:\IdeaProjects\MultipleVideoBigDataShow\src\main\java\model" />
       <recent name="D:\IdeaProjects\MultipleVideoBigDataShow\src\main\java\mapper" />
       <recent name="D:\IdeaProjects\MultipleVideoBigDataShow\src\main\java\biz\mappers" />
+      <recent name="D:\IdeaProjects\MultipleVideoBigDataShow\src\main\webapp\images\WeiXinBackstage" />
+      <recent name="D:\IdeaProjects\MultipleVideoBigDataShow\src\main\webapp\WEB-INF\pages\WeiXinBackstage" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -584,6 +619,7 @@
       </method>
     </configuration>
     <configuration name="Tomcat 9.0.19" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.19" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="MultipleVideoBigDataShow:war exploded">
           <settings>
@@ -687,7 +723,7 @@
       <workItem from="1556175417599" duration="10561000" />
       <workItem from="1556232361872" duration="15500000" />
       <workItem from="1556263081161" duration="4633000" />
-      <workItem from="1556315279563" duration="19005000" />
+      <workItem from="1556315279563" duration="20937000" />
     </task>
     <task id="LOCAL-00001" summary="修正httppost请求上传文件的bug">
       <created>1555485554832</created>
@@ -717,11 +753,18 @@
       <option name="project" value="LOCAL" />
       <updated>1556246475947</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="微信公众号的后台正在搭建中......">
+      <created>1556339108463</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1556339108463</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63253000" />
+    <option name="totallyTimeSpent" value="65185000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -771,44 +814,10 @@
     <MESSAGE value="修正httppost请求上传文件的bug" />
     <MESSAGE value="微信text消息的处理完成！！！" />
     <MESSAGE value="微信voice消息的处理完成！！！" />
-    <option name="LAST_COMMIT_MESSAGE" value="微信voice消息的处理完成！！！" />
+    <MESSAGE value="微信公众号的后台正在搭建中......" />
+    <option name="LAST_COMMIT_MESSAGE" value="微信公众号的后台正在搭建中......" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/htmls/photo1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/biz/service/AllResultItemService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/image/ImageSearchController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-653">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/MavenRepository/commons-fileupload/commons-fileupload/1.3.3/commons-fileupload-1.3.3.jar!/org/apache/commons/fileupload/FileItem.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-145">
-          <caret line="15" column="52" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/MavenRepository/org/springframework/spring-web/4.3.10.RELEASE/spring-web-4.3.10.RELEASE.jar!/org/springframework/web/multipart/commons/CommonsMultipartFile.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="25" column="34" lean-forward="true" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/facetoface/UploadHeadImageController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
@@ -908,13 +917,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/wechat/CheckSignatureController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="66" column="43" lean-forward="true" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/model/wechat/OutMsgEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
@@ -933,13 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/biz/service/wechat/CheckSignatureService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="141" column="17" lean-forward="true" selection-start-line="141" selection-start-column="17" selection-end-line="141" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -990,27 +985,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/WeiXinBackstage/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="385">
           <caret line="33" column="33" lean-forward="true" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/biz/service/WeiXinBackstage/WeiXinBackstageIndexService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="40" column="48" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1059,23 +1037,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/main.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/WeiXinBackstage/main.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="30" column="27" lean-forward="true" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/WeiXinBackstage/WeiXinBackstageIndexController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="36" column="43" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1093,10 +1058,87 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/wechat/CheckSignatureController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="66" column="43" lean-forward="true" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/biz/service/wechat/CheckSignatureService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="422" column="69" lean-forward="true" selection-start-line="402" selection-start-column="8" selection-end-line="422" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/biz/service/WeiXinBackstage/WeiXinBackstageIndexService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="43" column="9" lean-forward="true" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/main.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/WeiXinBackstage/WeiXinBackstageIndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="40" column="25" lean-forward="true" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jss/WeiXinBackstage/uploadImage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="11" column="41" lean-forward="true" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+        <state relative-caret-position="269">
+          <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Media.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mapper/MediaMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/biz/mappers/MediaMapper.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/biz/controller/WeiXinBackstage/WeiXinUploadImageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="16" column="33" lean-forward="true" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/biz/service/WeiXinBackstage/WeiXinUploadImageService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#2160#2176#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

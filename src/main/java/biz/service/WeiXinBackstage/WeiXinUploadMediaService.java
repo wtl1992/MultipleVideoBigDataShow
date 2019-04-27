@@ -16,12 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class WeiXinUploadImageService {
+public class WeiXinUploadMediaService {
 
     @Autowired
     private MediaMapper mediaMapper;
 
-    public Object uploadImage(MultipartFile multipartFile) throws Exception{
+    public Object uploadMedia(MultipartFile multipartFile,
+                              String type)throws Exception{
         Map<String, byte[]> files = new HashMap<String, byte[]>();
 
         BufferedInputStream bufferedInputStream = new BufferedInputStream(multipartFile.getInputStream());
@@ -34,7 +35,21 @@ public class WeiXinUploadImageService {
             byteArrayOutputStream.write(buffer,0,length);
         }
         files.put("media", byteArrayOutputStream.toByteArray());
-        InputStream inputStream = HttpRequestPostUtil.uploadMultipartFile("https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=" + SysContext.ACCESS_TOKEN, null, files, "media","jpg");
+        String suffix = "jpg";
+        switch (type){
+            case "image":
+                suffix = "jpg";
+                break;
+            case "voice":
+                suffix = "amr";
+                break;
+            case "video":
+                suffix = "mp4";
+            case "thumb":
+                suffix = "jpg";
+                break;
+        }
+        InputStream inputStream = HttpRequestPostUtil.uploadMultipartFile("https://api.weixin.qq.com/cgi-bin/material/add_material?access_token="+SysContext.ACCESS_TOKEN+"&type="+type, null, files, "media",suffix);
         BufferedInputStream bufferedInputStream_result = new BufferedInputStream(inputStream);
         ByteArrayOutputStream byteArrayOutputStream_result = new ByteArrayOutputStream();
 
@@ -46,7 +61,7 @@ public class WeiXinUploadImageService {
 
         JSONObject jsonObject = JSONObject.fromObject(result_upload);
         Media media = new Media();
-        media.setUrl(jsonObject.getString("url"));
+        media.setMediaId(jsonObject.getString("media_id"));
         int result = mediaMapper.insertSelective(media);
 
         Map<String,Object> map = new HashMap<String, Object>();

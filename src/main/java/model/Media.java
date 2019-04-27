@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class Media implements Serializable {
     private Integer id;
 
+    private String url;
+
     private String mediaId;
 
     private static final long serialVersionUID = 1L;
@@ -15,6 +17,14 @@ public class Media implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 
     public String getMediaId() {

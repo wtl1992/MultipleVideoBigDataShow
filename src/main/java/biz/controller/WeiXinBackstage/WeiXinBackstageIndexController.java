@@ -4,6 +4,7 @@ import biz.service.WeiXinBackstage.WeiXinBackstageIndexService;
 import model.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,6 +36,27 @@ public class WeiXinBackstageIndexController {
     @RequestMapping("/uploadImage")
     public String uploadImage(){
         return "WeiXinBackstage/uploadImage";
+    }
+
+
+    @RequestMapping("/uploadMedia")
+    public String uploadMedia(Model model,String type){
+        model.addAttribute("type",type);
+        switch (type){
+            case "image":
+                model.addAttribute("media_type","图片");
+                break;
+            case "voice":
+                model.addAttribute("media_type","语音");
+                break;
+            case "video":
+                model.addAttribute("media_type","video");
+                break;
+            case "thumb":
+                model.addAttribute("media_type","thumb");
+                break;
+        }
+        return "WeiXinBackstage/uploadMedia";
     }
 
     @RequestMapping("/login")

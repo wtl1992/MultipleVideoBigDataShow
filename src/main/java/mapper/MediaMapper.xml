@@ -3,6 +3,7 @@
 <mapper namespace="biz.mappers.MediaMapper">
   <resultMap id="BaseResultMap" type="model.Media">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="media_id" jdbcType="VARCHAR" property="mediaId" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, media_id
+    id, url, media_id
   </sql>
   <select id="selectByExample" parameterType="model.MediaExample" resultMap="BaseResultMap">
     select
@@ -98,14 +99,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="model.Media">
-    insert into media (id, media_id)
-    values (#{id,jdbcType=INTEGER}, #{mediaId,jdbcType=VARCHAR})
+    insert into media (id, url, media_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="model.Media">
     insert into media
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="url != null">
+        url,
       </if>
       <if test="mediaId != null">
         media_id,
@@ -114,6 +120,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
       <if test="mediaId != null">
         #{mediaId,jdbcType=VARCHAR},
@@ -132,6 +141,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
       <if test="record.mediaId != null">
         media_id = #{record.mediaId,jdbcType=VARCHAR},
       </if>
@@ -143,6 +155,7 @@
   <update id="updateByExample" parameterType="map">
     update media
     set id = #{record.id,jdbcType=INTEGER},
+      url = #{record.url,jdbcType=VARCHAR},
       media_id = #{record.mediaId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -151,6 +164,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="model.Media">
     update media
     <set>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
       <if test="mediaId != null">
         media_id = #{mediaId,jdbcType=VARCHAR},
       </if>
@@ -159,7 +175,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="model.Media">
     update media
-    set media_id = #{mediaId,jdbcType=VARCHAR}
+    set url = #{url,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

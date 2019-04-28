@@ -19,25 +19,23 @@
     <meta http-equiv="keywords" content="全网检索,大数据,高级检索"/>
     <meta http-equiv="description" content="全网检索数据库"/>
     <link rel="shortcut icon" href="../images/logo/index_logo.png" type="image/icon"/>
-    <link rel="stylesheet" type="text/css" href="../css/WeiXinBackstage/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/WeiXinBackstage/getMedias.css"/>
     <!--
         <link rel="stylesheet" type="text/css" href="styles.css">
         -->
     <script type="text/javascript" src="../jss/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="../jss/WeiXinBackstage/main.js"></script>
+    <script type="text/javascript" src="../jss/WeiXinBackstage/getMedias.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <h1>公众号管理平台</h1>
+        <h3>展示所有上传的media媒体资源信息</h3>
         <ul>
             <li>
-                <a href="weiXinBackstage/uploadImage">上传图片接口</a>
+                <input type="text" value="id">
+                <input type="text" value="url">
+                <input type="text" value="media_id">
             </li>
-            <li><a href="weiXinBackstage/uploadMedia?type=voice">上传语音接口</a></li>
-            <li>自定义菜单</li>
-            <li>临时素材管理接口</li>
-            <li><a href="weiXinBackstage/getMedias">获取资源列表</a></li>
         </ul>
     </div>
 </body>

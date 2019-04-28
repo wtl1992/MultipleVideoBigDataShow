@@ -15,6 +15,12 @@ img{
     vertical-align: top;
 }
 
+
+body{
+    background-image: url("../../images/index_jsp/index_background.jpg");
+    background-size: cover;
+}
+
 div.container{
     text-align: center;
 }

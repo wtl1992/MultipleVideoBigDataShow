@@ -1,6 +1,8 @@
 package biz.mappers;
 
 import java.util.List;
+import java.util.Map;
+
 import model.Media;
 import model.MediaExample;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +29,6 @@ public interface MediaMapper {
     int updateByPrimaryKeySelective(Media record);
 
     int updateByPrimaryKey(Media record);
+
+    List<Media> getAllMediaByLimit(Map<String,Object> map);
 }

@@ -59,6 +59,11 @@ public class WeiXinBackstageIndexController {
         return "WeiXinBackstage/uploadMedia";
     }
 
+    @RequestMapping("/getMedias")
+    public String getMedias(){
+        return "WeiXinBackstage/getMedias";
+    }
+
     @RequestMapping("/login")
     public String login(LoginUser loginUser,HttpSession session) throws Exception{
         Map<String, Object> objectMap = weiXinBackstageIndexService.login(loginUser,session);

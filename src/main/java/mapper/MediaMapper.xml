@@ -179,4 +179,8 @@
       media_id = #{mediaId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAllMediaByLimit" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select * from media limit #{start},#{count} ;
+  </select>
 </mapper>

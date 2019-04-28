@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import utils.HttpRequestPostUtil;
+import utils.HttpRequestUtil;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,19 +26,28 @@ public class WeiXinUploadMediaService {
     private MediaMapper mediaMapper;
 
     public Object uploadMedia(MultipartFile multipartFile,
-                              String type)throws Exception{
+                              String type,
+                              String content)throws Exception{
         Map<String, byte[]> files = new HashMap<String, byte[]>();
-
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(multipartFile.getInputStream());
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
         byte buffer [] = new byte[1024];
         int length = -1;
-
-        while((length = bufferedInputStream.read(buffer))!=-1){
-            byteArrayOutputStream.write(buffer,0,length);
+        /**
+         * 使用百度翻译中的语音进行上传
+         */
+        if ("voice".equalsIgnoreCase(type)){
+            String url_voice = "https://fanyi.baidu.com/gettts?lan=zh&text="+ URLEncoder.encode(content,"utf-8")+"&spd=5&source=web";
+            byte[] httpThroughBytes = HttpRequestUtil.requestHttpThroughBytes(url_voice, "utf-8", "GET");
+            files.put("media", httpThroughBytes);
         }
-        files.put("media", byteArrayOutputStream.toByteArray());
+        else{
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(multipartFile.getInputStream());
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            while((length = bufferedInputStream.read(buffer))!=-1){
+                byteArrayOutputStream.write(buffer,0,length);
+            }
+            files.put("media", byteArrayOutputStream.toByteArray());
+        }
         String suffix = "jpg";
         switch (type){
             case "image":
@@ -74,5 +87,23 @@ public class WeiXinUploadMediaService {
         }
 
         return map;
+    }
+
+
+    /**
+     * 获取给定文字的语音
+     * @param content
+     * @param httpServletResponse
+     * @throws Exception
+     */
+    public void getVoice(String content,
+                         HttpServletResponse httpServletResponse)throws Exception{
+        String url_voice = "https://fanyi.baidu.com/gettts?lan=zh&text="+ URLEncoder.encode(content,"utf-8")+"&spd=5&source=web";
+        byte[] httpThroughBytes = HttpRequestUtil.requestHttpThroughBytes(url_voice, "utf-8", "GET");
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(httpServletResponse.getOutputStream());
+
+        bufferedOutputStream.write(httpThroughBytes);
+
+        bufferedOutputStream.close();
     }
 }

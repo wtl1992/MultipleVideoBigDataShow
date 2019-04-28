@@ -32,10 +32,11 @@
         <h1>上传${media_type}接口</h1>
         <span id="type" style="display: none;">${type}</span>
         <div class="form">
-            <input type="file" value="" id="file"/>
             <div id="selectMediaDiv">
-                <span class="selectMedia">选择${media_type}文件</span><br/>
-                <img src="../images/WeiXinBackstage/timg.jpg"/>
+                <h3>请输入所需要上传语音的文字</h3>
+                <textarea></textarea><br/>
+                <button>播放语音</button>
+                <audio autoplay controls></audio>
             </div>
             <input type="button" value="上传${media_type}素材到微信公众号空间">
         </div>

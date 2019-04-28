@@ -15,6 +15,11 @@ img{
     vertical-align: top;
 }
 
+body{
+    background-image: url("../../images/index_jsp/index_background.jpg");
+    background-size: cover;
+}
+
 div.container{
     text-align: center;
 }
@@ -54,4 +59,23 @@ div.container input[type=button]{
 
 div.container input[type=button]:hover{
     color: #1f36ff;
+}
+
+
+textarea{
+    width: 96%;
+    height: 300px;
+    outline: none;
+    border: 1px dotted #CCCCCC;
+    margin: 20px auto;
+    font-size: 20px;
+    padding: 10px;
+    resize: none;
+}
+
+button{
+    width: 200px;
+    height: 30px;
+    font-size: 20px;
+    margin-bottom: 30px;
 }
